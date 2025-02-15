@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChoreWars - Chore Lists</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .chore-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+        }
+
+        .chore-category {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 2px solid #00ffcc;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .chore-category h2 {
+            color: #00ffcc;
+            text-shadow: 0 0 10px #00ffcc;
+            margin-bottom: 1rem;
+        }
+
+        .chore-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .chore-list li {
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .claim-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .claim-button {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .easy {
+            background: linear-gradient(145deg, #00ffcc, #00cc99);
+            color: black;
+        }
+
+        .medium {
+            background: linear-gradient(145deg, #ffcc00, #ff9900);
+            color: black;
+        }
+
+        .hard {
+            background: linear-gradient(145deg, #ff0066, #cc0066);
+            color: white;
+        }
+
+        .claim-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.5);
+        }
+
+        .return-home-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 0.8rem 1.5rem;
+            background: #00ffcc;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .return-home-button:hover {
+            background: #00cc99;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="chore-container">
+        <h1 style="text-align: center; color: #00ffcc; text-shadow: 0 0 15px #00ffcc;">🏡 Chore Wars – Chore Lists</h1>
+
+        <div class="chore-category">
+            <h2>🔹 Basic Chores (Easy - 20 XP)</h2>
+            <ul class="chore-list">
+                <li>Make the bed</li>
+                <li>Take out the trash</li>
+                <li>Wipe down counters</li>
+                <li>Water the plants</li>
+                <li>Load/unload dishwasher</li>
+                <li>Sweep the floor of assigned room or area</li>
+                <li>Feed the pets</li>
+                <li>Dust the shelves (particular area)</li>
+            </ul>
+            <div class="claim-buttons">
+                <button class="claim-button easy">Claim Easy Task</button>
+            </div>
+        </div>
+
+        <div class="chore-category">
+            <h2>🔹 Intermediate Chores (Medium - 30 XP)</h2>
+            <ul class="chore-list">
+                <li>Vacuum specific rooms (like bedroom, hall, etc)</li>
+                <li>Clean the bathroom sink & mirror</li>
+                <li>Mop the floor of kitchen</li>
+                <li>Cook a meal for everyone</li>
+                <li>Fold and put away laundry</li>
+                <li>Clean the fridge (remove expired items)</li>
+                <li>Wipe down kitchen appliances</li>
+                <li>Change bed sheets</li>
+            </ul>
+            <div class="claim-buttons">
+                <button class="claim-button medium">Claim Medium Task</button>
+            </div>
+        </div>
+
+        <div class="chore-category">
+            <h2>🔹 Advanced Chores (Hard - 50 XP)</h2>
+            <ul class="chore-list">
+                <li>Deep clean the bathroom (toilet, shower, floor)</li>
+                <li>Wash the windows</li>
+                <li>Clean the oven/microwave</li>
+                <li>Declutter and donate old clothes/items</li>
+                <li>Yard work (mowing, weeding, trimming)</li>
+                <li>Clean out and organize the garage/basement</li>
+                <li>Full fridge organization and grocery which is needed</li>
+                <li>Car wash</li>
+            </ul>
+            <div class="claim-buttons">
+                <button class="claim-button hard">Claim Hard Task</button>
+            </div>
+        </div>
+
+        <p style="text-align: center; color: #00ffcc; margin-top: 2rem; font-size: 1.2rem;">
+            Let the Chore Wars begin! 🏆
+        </p>
+    </div>
+
+    <button class="return-home-button" onclick="window.location.href='index.html'">Return to Home Page</button>
+
+    <script>
+        // Add functionality to claim buttons
+        const claimButtons = document.querySelectorAll('.claim-button');
+        claimButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const difficulty = button.classList.contains('easy') ? 'Easy' :
+                                 button.classList.contains('medium') ? 'Medium' : 'Hard';
+                alert(`You've claimed a ${difficulty} task!`);
+                // Add logic to update XP and mark task as completed
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChoreWars: Kingdom Showdown</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Loading Screen -->
+    <div class="loading-screen">
+        <video autoplay loop muted playsinline class="background-video">
+            <source src="chores-background.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="loading-content">
+            <h1>ChoreWars: Kingdom Showdown</h1>
+            <div class="welcome-text">Welcome to ChoreWars!</div>
+            <div class="name-image-box">
+                <div class="image-container">
+                    <img src="o.jpg" alt="Chores Illustration" class="sliding-image">
+                </div>
+            </div>
+            <div class="loading-bottom">
+                <div class="loading-progress">
+                    <div class="loading-bar-container">
+                        <div class="loading-bar"></div>
+                    </div>
+                </div>
+                <div class="creators">
+                    🛠️ Created by Yug Shah & Jayesh Agrawal
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" style="display: none;">
+        <h1>🔥 ChoreWars: Kingdom Showdown 👑⚔️</h1>
+        <p class="animated-text">Battle the Mess, Earn Points, Rule the Home!</p>
+        <p class="animated-text">⚡ Complete daily tasks, collect XP, and unlock rewards!</p>
+        <p class="animated-text">💥 Hard work today earns you a well-deserved break tomorrow! 💥</p>
+        <button id="rules-button" onclick="window.location.href='rules.html'">Let’s Understand The Rules</button>
+        <div id="chore-assignments" onclick="window.location.href='chores.html'" style="cursor: pointer;">
+            <h2>Chore Assignments</h2>
+            <ul id="chore-list"></ul>
+        </div>
+        <div id="xp-levels">
+            <h2>Your XP</h2>
+            <p id="xp-display">XP: 0</p>
+        </div>
+        <div id="rewards">
+            <h2>Rewards</h2>
+            <p id="rewards-display">Points: 0</p>
+        </div>
+        <footer>
+            <p>🛠️ Created by: Yug Shah & Jayesh Agrawal</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Show main content after loading animation
+        setTimeout(() => {
+            const loadingScreen = document.querySelector('.loading-screen');
+            const mainContent = document.querySelector('.main-content');
+            loadingScreen.remove(); // Remove loading screen completely
+            mainContent.style.display = 'block';
+            history.replaceState(null, '', window.location.href); // Update URL without adding to history
+        }, 3000); // 3 seconds loading time
+    </script>
+</body>
+</html>

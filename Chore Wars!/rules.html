@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chore Wars - Official Rules</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .rules-container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 15px;
+            box-shadow: 0 0 20px rgba(0, 255, 204, 0.5);
+        }
+
+        .rules-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border: 2px solid #00ffcc;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.6);
+        }
+
+        .rules-section h2 {
+            color: #00ffcc;
+            text-shadow: 0 0 10px #00ffcc;
+            margin-bottom: 1rem;
+        }
+
+        .rules-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .rules-list li {
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            color: white;
+        }
+
+        .xp-level {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .xp-level span {
+            font-size: 1.2rem;
+        }
+
+        .easy {
+            color: #00ffcc;
+        }
+
+        .medium {
+            color: #ffcc00;
+        }
+
+        .hard {
+            color: #ff0066;
+        }
+
+        .reward-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem;
+            margin: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+        }
+
+        .reward-xp {
+            color: #00ffcc;
+            font-weight: bold;
+        }
+
+        .return-home-button {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            padding: 0.8rem 1.5rem;
+            background: #00ffcc;
+            color: black;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .return-home-button:hover {
+            background: #00cc99;
+            transform: scale(1.05);
+            box-shadow: 0 0 15px rgba(0, 255, 204, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="rules-container">
+        <h1 style="text-align: center; color: #00ffcc; text-shadow: 0 0 15px #00ffcc;">🛡️ Chore Wars – Official Game Rules & Chore System 🛡️</h1>
+
+        <div class="rules-section">
+            <h2>📌 How the Game Works</h2>
+            <ul class="rules-list">
+                <li>Each player is assigned 5 random chores per day</li>
+                <li>Chores are categorized by difficulty: 
+                    <span class="easy">Easy (🟢)</span>, 
+                    <span class="medium">Medium (🟡)</span>, 
+                    <span class="hard">Hard (🔴)</span>
+                </li>
+                <li>Players must complete their assigned chores before the daily reset (e.g., midnight)</li>
+            </ul>
+        </div>
+
+        <div class="rules-section">
+            <h2>XP & Levels</h2>
+            <ul class="rules-list">
+                <li>Completing chores earns XP (experience points) based on difficulty:</li>
+                <div class="xp-level">
+                    <span class="easy">🟢 Easy:</span>
+                    <span>20 XP</span>
+                </div>
+                <div class="xp-level">
+                    <span class="medium">🟡 Medium:</span>
+                    <span>30 XP</span>
+                </div>
+                <div class="xp-level">
+                    <span class="hard">🔴 Hard:</span>
+                    <span>50 XP</span>
+                </div>
+            </ul>
+        </div>
+
+        <div class="rules-section">
+            <h2>Rewards & Perks</h2>
+            <ul class="rules-list">
+                <li>XP can be redeemed for special rewards, such as:</li>
+                <div class="reward-item">
+                    <span>🎬 Choose the Movie Night Pick</span>
+                    <span class="reward-xp">200 XP</span>
+                </div>
+                <div class="reward-item">
+                    <span>🍽️ Skip Dishwashing for a Day</span>
+                    <span class="reward-xp">250 XP</span>
+                </div>
+                <div class="reward-item">
+                    <span>🛏️ Skip One Chore</span>
+                    <span class="reward-xp">500 XP</span>
+                </div>
+                <div class="reward-item">
+                    <span>🍕 Choose Takeout Dinner for the Family</span>
+                    <span class="reward-xp">150 XP</span>
+                </div>
+                <div class="reward-item">
+                    <span>💰 Real Money Bonus</span>
+                    <span class="reward-xp">Every 1000 XP = $10</span>
+                </div>
+            </ul>
+        </div>
+
+        <div class="rules-section">
+            <h2>Penalties & Consequences</h2>
+            <ul class="rules-list">
+                <li>❌ Miss a Chore = -50 XP</li>
+                <li>❌ Fail to Complete 3+ Chores in a Day = No XP for the Day</li>
+            </ul>
+        </div>
+
+        <p style="text-align: center; color: white; margin-top: 2rem; font-size: 1.2rem;">
+            Let the Chore Wars begin! 🏆
+        </p>
+
+        <button class="return-home-button" onclick="window.location.href='index.html'">Return to Home Page</button>
+    </div>
+</body>
+</html>
