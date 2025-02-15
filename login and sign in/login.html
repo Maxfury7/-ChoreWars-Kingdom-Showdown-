@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Login</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>User Login</h1>
+        <form id="loginForm" onsubmit="return false;">
+            <label for="login-username">Username:</label>
+            <input type="text" id="login-username" required>
+            <label for="login-password">Password:</label>
+            <input type="password" id="login-password" required>
+            <input type="submit" value="Login">
+        </form>
+        <div class="link">
+            <p>Don't have an account? <a href="sign_in.html">Click here to register</a></p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM fully loaded and parsed');
+            
+            const form = document.getElementById('loginForm');
+            const submitBtn = form.querySelector('input[type="submit"]');
+            
+            if (!form) {
+                console.error('Login form not found');
+                return;
+            }
+            
+            if (!submitBtn) {
+                console.error('Submit button not found');
+                return;
+            }
+            
+            submitBtn.addEventListener('click', function(event) {
+                console.log('Submit button clicked');
+                loginUser(event);
+            });
+        });
+
+        async function loginUser(event) {
+            event.preventDefault();
+            const username = document.getElementById('login-username').value;
+            const password = document.getElementById('login-password').value;
+
+            try {
+                const requestOptions = {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ username, password })
+                };
+                
+                const response = await fetch('http://localhost:5504/api/auth/login', requestOptions);
+                
+                if (!response.ok) {
+                    console.error('Response not OK:', response.statusText);
+                }
+                
+                const data = await response.json().catch(error => {
+                    console.error('Error parsing JSON:', error);
+                    return { error: 'Invalid server response' };
+                });
+                if (response.ok) {
+                    console.log('Login successful:', data);
+                    alert('Login successful! Redirecting...');
+                    window.location.href = '../../Chore Wars!/index.html';
+                } else {
+                    const errorMessage = data.error || `HTTPS Error: ${response.status} ${response.statusText}`;
+                    console.error('Login failed:', errorMessage);
+                    alert(`Login failed: ${errorMessage}`);
+                }
+            } catch (error) {
+                console.error('Login process failed:', {
+                    name: error.name,
+                    message: error.message,
+                    stack: error.stack
+                });
+                alert('Login process failed. Check console for detailed error information.');
+            }
+        }
+    </script>
+</body>
+</html>
