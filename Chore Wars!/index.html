@@ -16,9 +16,13 @@
         <div class="loading-content">
             <h1>ChoreWars: Kingdom Showdown</h1>
             <div class="welcome-text">Welcome to ChoreWars!</div>
+            <div class="additional-content">
+                <p>Complete your daily chores, earn XP, and unlock amazing rewards!</p>
+                <p>Let's make household chores fun and rewarding!</p>
+            </div>
             <div class="name-image-box">
                 <div class="image-container">
-                    <img src="o.jpg" alt="Chores Illustration" class="sliding-image">
+                    <img src="1.jpg" alt="Chores Illustration" class="sliding-image">
                 </div>
             </div>
             <div class="loading-bottom">
@@ -50,8 +54,24 @@
             <p id="xp-display">XP: 0</p>
         </div>
         <div id="rewards">
-            <h2>Rewards</h2>
-            <p id="rewards-display">Points: 0</p>
+            <h2>🎁 Rewards System (Redeem XP for Perks)</h2>
+            <div class="reward-item">
+                <span>Skip a chore pass</span>
+                <button class="redeem-button" data-cost="250">Redeem (250 XP)</button>
+            </div>
+            <div class="reward-item">
+                <span>Movie night selection</span>
+                <button class="redeem-button" data-cost="300">Redeem (300 XP)</button>
+            </div>
+            <div class="reward-item">
+                <span>Game night of choice</span>
+                <button class="redeem-button" data-cost="350">Redeem (350 XP)</button>
+            </div>
+            <div class="reward-item">
+                <span>Week off from a specific chore</span>
+                <button class="redeem-button" data-cost="600">Redeem (600 XP)</button>
+            </div>
+            <p id="rewards-display">Your XP: 0</p>
         </div>
         <footer>
             <p>🛠️ Created by: Yug Shah & Jayesh Agrawal</p>
@@ -59,6 +79,53 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // Initialize XP from localStorage
+        let currentXP = parseInt(localStorage.getItem('xp')) || 0;
+        
+        // Update XP displays on page load
+        const xpDisplays = document.querySelectorAll('#xp-display, #rewards-display');
+        xpDisplays.forEach(display => {
+            display.textContent = display.id === 'rewards-display' ? `Your XP: ${currentXP}` : `XP: ${currentXP}`;
+        });
+
+        // Redeem reward functionality
+        const redeemButtons = document.querySelectorAll('.redeem-button');
+        const xpDisplay = document.getElementById('rewards-display');
+
+        function updateRewards() {
+            // Update all XP displays
+            xpDisplays.forEach(display => {
+                display.textContent = display.id === 'rewards-display' ? `Your XP: ${currentXP}` : `XP: ${currentXP}`;
+            });
+            
+            // Update redeem buttons
+            redeemButtons.forEach(button => {
+                const cost = parseInt(button.dataset.cost);
+                button.disabled = currentXP < cost;
+            });
+        }
+
+        redeemButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const cost = parseInt(button.dataset.cost);
+                if (currentXP >= cost) {
+                    currentXP -= cost;
+                    localStorage.setItem('xp', currentXP);
+                    updateRewards();
+                    alert(`You've successfully redeemed ${button.previousElementSibling.textContent}!`);
+                    // Update XP display on other pages
+                    const xpDisplays = document.querySelectorAll('#xp-display');
+                    xpDisplays.forEach(display => {
+                        if (display) display.textContent = `XP: ${currentXP}`;
+                    });
+                }
+            });
+        });
+
+        // Initialize rewards display
+        updateRewards();
+    </script>
     <script>
         // Show main content after loading animation
         setTimeout(() => {

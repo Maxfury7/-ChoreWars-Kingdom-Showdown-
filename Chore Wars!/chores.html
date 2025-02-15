@@ -158,6 +158,16 @@
             </div>
         </div>
 
+        <div class="daily-xp">
+            <p>The daily task requires completing chores equivalent to 150 XP</p>
+        </div>
+
+        <div id="assigned-task" style="display: none;">
+            <h3>Your Assigned Task:</h3>
+            <p id="task-description"></p>
+            <button id="complete-task" class="complete-button">Mark as Complete</button>
+        </div>
+
         <p style="text-align: center; color: #00ffcc; margin-top: 2rem; font-size: 1.2rem;">
             Let the Chore Wars begin! 🏆
         </p>
@@ -166,16 +176,128 @@
     <button class="return-home-button" onclick="window.location.href='index.html'">Return to Home Page</button>
 
     <script>
-        // Add functionality to claim buttons
+        // Task arrays with XP values
+        const tasks = {
+            easy: [
+                { task: "Make the bed", xp: 25 },
+                { task: "Take out the trash", xp: 25 },
+                { task: "Wipe down counters", xp: 25 },
+                { task: "Water the plants", xp: 25 },
+                { task: "Load/unload dishwasher", xp: 25 },
+                { task: "Sweep the floor of assigned room or area", xp: 25 },
+                { task: "Feed the pets", xp: 25 },
+                { task: "Dust the shelves (particular area)", xp: 25 }
+            ],
+            medium: [
+                { task: "Vacuum specific rooms (like bedroom, hall, etc)", xp: 30 },
+                { task: "Clean the bathroom sink & mirror", xp: 30 },
+                { task: "Mop the floor of kitchen", xp: 30 },
+                { task: "Cook a meal for everyone", xp: 30 },
+                { task: "Fold and put away laundry", xp: 30 },
+                { task: "Clean the fridge (remove expired items)", xp: 30 },
+                { task: "Wipe down kitchen appliances", xp: 30 },
+                { task: "Change bed sheets", xp: 30 }
+            ],
+            hard: [
+                { task: "Deep clean the bathroom (toilet, shower, floor)", xp: 50 },
+                { task: "Wash the windows", xp: 50 },
+                { task: "Clean the oven/microwave", xp: 50 },
+                { task: "Declutter and donate old clothes/items", xp: 50 },
+                { task: "Yard work (mowing, weeding, trimming)", xp: 50 },
+                { task: "Clean out and organize the garage/basement", xp: 50 },
+                { task: "Full fridge organization and grocery which is needed", xp: 50 },
+                { task: "Car wash", xp: 50 }
+            ]
+        };
+
+        // Get elements
+        const assignedTaskDiv = document.getElementById('assigned-task');
+        const taskDescription = document.getElementById('task-description');
+        const completeButton = document.getElementById('complete-task');
         const claimButtons = document.querySelectorAll('.claim-button');
+
+        // Initialize state
+        let currentXP = parseInt(localStorage.getItem('xp')) || 0;
+        const completedTasks = JSON.parse(localStorage.getItem('completedTasks')) || [];
+
+        // Update XP display
+        function updateXP() {
+            localStorage.setItem('xp', currentXP);
+            // Update XP display on both pages
+            const xpDisplays = document.querySelectorAll('#xp-display');
+            xpDisplays.forEach(display => {
+                if (display) display.textContent = `XP: ${currentXP}`;
+            });
+            // Update XP display on chores page
+            const xpDisplayChores = document.getElementById('xp-display-chores');
+            if (xpDisplayChores) {
+                xpDisplayChores.textContent = `XP: ${currentXP}`;
+            }
+        }
+
+        // Claim task functionality
         claimButtons.forEach(button => {
             button.addEventListener('click', () => {
-                const difficulty = button.classList.contains('easy') ? 'Easy' :
-                                 button.classList.contains('medium') ? 'Medium' : 'Hard';
-                alert(`You've claimed a ${difficulty} task!`);
-                // Add logic to update XP and mark task as completed
+                const difficulty = button.classList.contains('easy') ? 'easy' :
+                                 button.classList.contains('medium') ? 'medium' : 'hard';
+                
+                // Filter out completed tasks
+                const availableTasks = tasks[difficulty].filter(task => 
+                    !completedTasks.includes(task.task)
+                );
+
+                if (availableTasks.length > 0) {
+                    // Randomly select a task
+                    const randomTask = availableTasks[Math.floor(Math.random() * availableTasks.length)];
+                    
+                    // Display the task
+                    taskDescription.textContent = randomTask.task;
+                    assignedTaskDiv.style.display = 'block';
+
+                    // Set up complete button
+                    completeButton.onclick = () => {
+                    // Update XP
+                    currentXP += randomTask.xp;
+                    updateXP();
+                    
+                    // Mark task as completed
+                    completedTasks.push(randomTask.task);
+                    localStorage.setItem('completedTasks', JSON.stringify(completedTasks));
+                    
+                    // Update XP in database
+                    const userId = localStorage.getItem('userId');
+                    fetch('http://localhost:5504/api/xp', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            userId: userId,
+                            amount: randomTask.xp
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.success) {
+                            console.error('Failed to update XP in database');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error updating XP:', error);
+                    });
+                    
+                    // Hide task section
+                    assignedTaskDiv.style.display = 'none';
+
+                    };
+                } else {
+                    alert('All tasks of this difficulty have been completed!');
+                }
             });
         });
+        
+        // Initialize XP display
+        updateXP();
     </script>
 </body>
 </html>
